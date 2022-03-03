@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Optional;
 
 @RequestMapping("/cliente")
 @Controller
@@ -30,6 +29,8 @@ public class ClienteController {
         clienteService.findById(UserDetailsService.cliente.getIdCliente()).ifPresent(cliente -> model.addAttribute("clientes", cliente));
         return "cliente/editarCliente";
     }
+
+
 
     @GetMapping("/{id}")
     public String cliente(@PathVariable Integer id, Model model) {
@@ -60,5 +61,18 @@ public class ClienteController {
              clienteService.saveOrUpdate(client);
          });
         return  "redirect:/cliente/editar/"+(UserDetailsService.cliente.getIdCliente());
+    }
+
+    @GetMapping("/crear")
+    public String crearCliente( Model model,Cliente cliente ) {
+        model.addAttribute("clientes", cliente);
+        return "cliente/crearCliente";
+    }
+
+
+    @PostMapping("/crear/save")
+    public String crearCliente(Cliente cliente) {
+        clienteService.saveOrUpdate(cliente);
+        return   "redirect:/login";
     }
 }

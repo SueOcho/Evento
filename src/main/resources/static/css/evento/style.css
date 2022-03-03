@@ -25,7 +25,7 @@ h2{
     background-image: url('/image/bannerEventos.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: end;
+    background-position: bottom;
     height: 140px;
     padding:40px;
 

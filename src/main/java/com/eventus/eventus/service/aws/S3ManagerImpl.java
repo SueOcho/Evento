@@ -53,17 +53,19 @@ public class S3ManagerImpl implements S3Manager{
     @Override
     public boolean downloadObject(String bucketName, String source, String target) {
         S3Object object = s3Client.getObject(bucketName, source);
-        S3ObjectInputStream objectContent = object.getObjectContent();
-        File targetFile = new File(target);
-
-        try {
-            Files.copy(objectContent, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("Se descargó el archivo '"+source+ "' a la ruta '"+targetFile.toPath()+"' ");
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        System.out.println(object.getKey() +"si soy");
+        return  true;
+//        S3ObjectInputStream objectContent = object.getObjectContent();
+//        File targetFile = new File(target);
+//
+//        try {
+//            Files.copy(objectContent, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//            System.out.println("Se descargó el archivo '"+source+ "' a la ruta '"+targetFile.toPath()+"' ");
+//            return true;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
     }
 
     @Override

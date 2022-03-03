@@ -22,7 +22,7 @@
   <section id="header">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-        <a class="navbar-brand" th:href="@{/home}" ><img src="image/eventusLogo.png" width="50%" alt="logo"></a>
+        <a class="navbar-brand" th:href="@{/home}" ><img src="/image/eventusLogo.png" width="50%" alt="logo"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -58,33 +58,18 @@
         <div>
           <h1 class="mb-3"> CREA EVENTO <i class="fa-solid fa-calendar-day  text-black"></i></h1>
         </div>
-
         <div class="row margint-50 marginb-50">
           <div class="col-6">
-            <form method="post" th:action="@{/evento/crear/save}" th:object="${eventos}"  class="px-1 mx-3 font-weight-bolder padded">
+            <form method="post" th:action="@{/evento/crear/foto/save/{evento}  (evento = ${eventos.getIdEvento()})}"  enctype="multipart/form-data" class="px-1 mx-3 font-weight-bolder padded">
+
               <div class="form-group">
-                <label for="nombreEvento">Nombre:</label>
-                <input type="text" class="form-control" id="nombreEvento" name="nombreEvento" th:field="*{nombreEvento}" >
+                <label for="camposEventos">Foto de zonas del evento:</label>
+                <input type="file" class="form-control" id="camposEventos" name="camposEventos" >
               </div>
 
               <div class="form-group">
-                <label for="fechaEvento">Fecha:</label>
-                <input type="date" class="form-control" id="fechaEvento" name="fechaEvento" th:field="*{fechaEvento}">
-              </div>
-
-              <div class="form-group">
-                <label for="horaEvento">Hora:</label>
-                <input type="time" class="form-control" id="horaEvento" name="horaEvento" th:field="*{horaEvento}">
-              </div>
-
-              <div class="form-group">
-                <label for="descripcionEvento">Descripción:</label>
-                <input type="text" class="form-control" id="descripcionEvento" name="descripcionEvento" th:field="*{descripcionEvento}">
-              </div>
-
-              <div class="form-group">
-                <label for="informaciónEvento">Información adicional:</label>
-                <input type="text" class="form-control" id="informaciónEvento" name="informaciónEvento" th:field="*{informaciónEvento}">
+                <label for="portadaEvento">Foto de portada del evento:</label>
+                <input type="file" class="form-control" id="portadaEvento" name="portadaEvento" >
               </div>
 
               <div class="form-group">
@@ -106,7 +91,7 @@
               <div class="col text-black"><i class="fa-solid fa-hammer fa-5x"></i></div>
               <div class="col text-black"><i class="fa-solid fa-calendar fa-5x"></i></div>
             </div>
-
+s
 
           </div>
 

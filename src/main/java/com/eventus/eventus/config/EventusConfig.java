@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class EventusConfig {
 
-    AWSCredentials credentials = new BasicAWSCredentials("",
-            "");
+    AWSCredentials credentials = new BasicAWSCredentials("AKIA46CZA5EPN5SFTZEW",
+            "tOZqffCkJLOv4U+6203+kJCZrIrj4YG+74Yqw1/8");
 
     @Bean
     public S3Manager getS3Manager(){

@@ -31,7 +31,7 @@ public class S3ManagerService {
 
         try(InputStream inputStream = file.getInputStream()) {
             String originalFilename = file.getOriginalFilename();
-            return s3Manager.uploadObjectV2("flicker-cats", inputStream, originalFilename);
+            return s3Manager.uploadObjectV2("jflores-eventus", inputStream, originalFilename);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -47,6 +47,12 @@ public class S3ManagerService {
             s3List.add(fileS3);
         });
         return s3List;
+    }
+
+
+    public boolean test(){
+        s3Manager.downloadObject("jflores-eventus","chocolatada.jpg","xd");
+    return true;
     }
 
 //    public void saveUser(User user) {
