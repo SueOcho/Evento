@@ -36,8 +36,9 @@
               <a class="nav-link" th:href="@{/cliente/{id} (id = ${clientes.getIdCliente()})}" >Perfil</a>
             </li>
 
-            <li class="nav-item">
-              <a class="nav-link active" th:href="@{/evento}">Eventos</a>
+            <li class="nav-item active">
+              <a class="nav-link " th:href="@{/evento}">Eventos</a>
+
             </li>
           </ul>
           <form class="d-flex">
@@ -53,27 +54,31 @@
     <section id="formulario" class="margint-100 marginb-100 pantalla-m">
 
       <div class="container">
+
         <div>
-          <h1 class="mb-3"> Agregar imaganes <i class="fa-solid fa-image  text-black"></i></h1>
+          <h1 class="mb-3"> COMPRA ENTRADA <i class="fa-solid  fa-ticket-simple  text-black"></i></h1>
         </div>
         <div class="row margint-50 marginb-50">
           <div class="col-6">
-            <form method="post" th:action="@{/evento/crear/foto/save/{evento}  (evento = ${eventos.getIdEvento()})}"  enctype="multipart/form-data" class="px-1 mx-3 font-weight-bolder padded">
+            <form method="post" th:action="@{/entrada/create/save/{id} (id = ${eventoId})}" th:object="${entradas}"  class="px-1 mx-3 font-weight-bolder padded">
 
               <div class="form-group">
-                <label for="camposEventos">Foto de zonas del evento:</label>
-                <input type="file" class="form-control" id="camposEventos" name="camposEventos" >
+                <label for="entradaPrecio">Precio:</label>
+                <input type="text" class="form-control" id="entradaPrecio" name="entradaPrecio" th:field="*{entradaPrecio}" th:disabled="true">
               </div>
 
               <div class="form-group">
-                <label for="portadaEvento">Foto de portada del evento:</label>
-                <input type="file" class="form-control" id="portadaEvento" name="portadaEvento" >
+                <label for="cantidadEntrada">Cantidad Entrada:</label>
+                <input type="text" class="form-control" id="cantidadEntrada" name="cantidadEntrada" th:field="*{cantidadEntrada}" th:disabled="true">
               </div>
 
               <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block mt-3 mb-1">Agregar fotos</button>
-                <a class="btn btn-primary btn-block mt-3 mb-1"  th:href="@{/home}">Agregar luego</a>
+                <label for="nombreEntrada">Nombre Entrada:</label>
+                <input type="text" class="form-control" id="nombreEntrada" name="nombreEntrada" th:field="*{nombreEntrada}" th:disabled="true">
+              </div>
 
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block mt-3 mb-1">Comprar entrada</button>
               </div>
 
             </form>
@@ -91,6 +96,7 @@
               <div class="col text-black"><i class="fa-solid fa-hammer fa-5x"></i></div>
               <div class="col text-black"><i class="fa-solid fa-calendar fa-5x"></i></div>
             </div>
+
 
           </div>
 
@@ -119,7 +125,7 @@
           <a href=""><span>Contacto</span></a>
           <a href=""><span>Libro de reclamaciones</span></a>
           <a href=""><span>Preguntas frecuentes</span></a>
-          
+
         </div>
     </div>
   </div>

@@ -1,6 +1,8 @@
 package com.eventus.eventus.service;
 
+import com.eventus.eventus.model.Cliente;
 import com.eventus.eventus.model.CompraEntrada;
+import com.eventus.eventus.model.Evento;
 import com.eventus.eventus.repository.CompraEntradaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,4 +43,10 @@ public class CompraEntradaService implements CrudService<CompraEntrada, Integer>
             return true;
         })).orElse(false);
     }
+
+
+    public Optional<List<CompraEntrada>> findByIdCliente(Integer id) {
+        return compraEntradaRepository.findByIdCliente(id);
+    }
+
 }

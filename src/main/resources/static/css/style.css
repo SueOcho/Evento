@@ -63,3 +63,12 @@ a{
 .pantalla{
     min-height: calc(100vh - 235px);
 }
+
+.pantalla-m{
+    min-height: calc(100vh - 470px);
+}
+.pantalla-m2{
+    min-height: calc(100vh - 400px);
+}
+
+

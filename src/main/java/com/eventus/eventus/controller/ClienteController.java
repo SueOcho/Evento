@@ -51,7 +51,7 @@ public class ClienteController {
         cliente.setIdCliente(UserDetailsService.cliente.getIdCliente());
         cliente.setContraseñaCliente(UserDetailsService.cliente.getContraseñaCliente());
         clienteService.saveOrUpdate(cliente);
-        return  "redirect:/cliente/editar/"+cliente.getIdCliente();
+        return  "redirect:/cliente/"+cliente.getIdCliente();
     }
 
     @PostMapping("/editar/contra/save")
@@ -60,12 +60,13 @@ public class ClienteController {
              client.setContraseñaCliente(passwordEncoder.encode(cliente.getContraseñaCliente()));
              clienteService.saveOrUpdate(client);
          });
-        return  "redirect:/cliente/editar/"+(UserDetailsService.cliente.getIdCliente());
+        return  "redirect:/cliente/"+(UserDetailsService.cliente.getIdCliente());
     }
 
     @GetMapping("/crear")
     public String crearCliente( Model model,Cliente cliente ) {
         model.addAttribute("clientes", cliente);
+        System.out.println("si estoy en crear");
         return "cliente/crearCliente";
     }
 

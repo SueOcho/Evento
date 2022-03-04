@@ -23,4 +23,10 @@ public class AppController {
         return "menu";
     }
 
+    @GetMapping("logout")
+    public String logout(){
+        return "redirect:/login";
+    }
+
+
 }

@@ -19,7 +19,15 @@ public class HomeController {
     @GetMapping()
     public String eventos(Model model) {
         eventoService.findAll().ifPresent(eventos -> model.addAttribute("eventos", eventos));
-        clienteService.findById(UserDetailsService.cliente.getIdCliente()).ifPresent(cliente -> model.addAttribute("clientes", cliente));
+        try{
+            clienteService.findById(UserDetailsService.cliente.getIdCliente()).ifPresent(cliente -> model.addAttribute("clientes", cliente));
+
+        }
+        catch (Exception ex)
+        {
+            clienteService.findById(1).ifPresent(cliente -> model.addAttribute("clientes", cliente));
+
+        }
         return "home/index";
     }
 }

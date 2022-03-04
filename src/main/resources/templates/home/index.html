@@ -31,17 +31,24 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" th:href="@{/home}" >Inicio</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/cliente/{id} (id = ${clientes.getIdCliente()})}" >Perfil</a>
-            </li>
+
+            <div th:if="${clientes.getIdCliente()!=null}">
+              <li class="nav-item">
+                <a class="nav-link"     th:href="@{/cliente/{id} (id = ${clientes.getIdCliente()})}" >Perfil</a>
+              </li>
+            </div>
+
+
 
             <li class="nav-item">
               <a class="nav-link " th:href="@{/evento}">Eventos</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link " th:href="@{/comprar}">Mis compras</a>
+            </li>
           </ul>
           <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <a class="nav-link text-black" th:href="@{/logout}" >Salir</a>
           </form>
         </div>
       </div>
@@ -83,7 +90,7 @@
           <div class="card-body">
             <h5 th:text="${evento.nombreEvento}" class="card-title"></h5>
             <p class="card-text" th:text="${evento.fechaEvento}"></p>
-            <a href="#" class="btn btn-primary">Comprar</a>
+            <a th:href="@{/comprar/{id} (id = ${evento.getIdEvento()})}"   class="btn btn-primary" >Comprar</a>
           </div>
         </div>
       </div>

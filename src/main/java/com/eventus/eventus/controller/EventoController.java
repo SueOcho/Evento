@@ -1,5 +1,7 @@
 package com.eventus.eventus.controller;
 
+import com.eventus.eventus.model.Cliente;
+import com.eventus.eventus.model.Entrada;
 import com.eventus.eventus.model.Evento;
 import com.eventus.eventus.service.ClienteService;
 import com.eventus.eventus.service.EventoService;
@@ -13,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -38,6 +42,16 @@ public class EventoController {
     public String agregarEventoSave( Evento evento,Model model) {
 
         evento.setCliente(UserDetailsService.cliente);
+        evento.setCamposEventos("https://jflores-eventus.s3.amazonaws.com/fotoEventoPre.jpg");
+        evento.setPortadaEvento("https://jflores-eventus.s3.amazonaws.com/fotoEventoPre.jpg");
+        eventoService.saveOrUpdate(evento);
+        clienteService.findById(UserDetailsService.cliente.getIdCliente()).ifPresent(cliente -> model.addAttribute("clientes", cliente));
+        model.addAttribute("eventos",evento);
+        return  "evento/crearEventoFoto";
+    }
+    @PostMapping("/update/save")
+    public String updaterEventoSave( Evento evento,Model model) {
+        evento.setCliente(UserDetailsService.cliente);
         eventoService.saveOrUpdate(evento);
         clienteService.findById(UserDetailsService.cliente.getIdCliente()).ifPresent(cliente -> model.addAttribute("clientes", cliente));
         model.addAttribute("eventos",evento);
@@ -46,7 +60,8 @@ public class EventoController {
 
 
     @PostMapping("/crear/foto/save/{id}")
-    public String agregarEventoSave( @RequestParam("camposEventos") MultipartFile camposEventos,@RequestParam("portadaEvento") MultipartFile portadaEvento, RedirectAttributes redirectAttributes,@PathVariable Integer id) {
+    public String agregarEventoSave( @RequestParam("camposEventos") MultipartFile camposEventos,@RequestParam("portadaEvento") MultipartFile portadaEvento,@PathVariable Integer id,Model model){
+
 
 
         log.info("Nombre original :" +camposEventos.getOriginalFilename());
@@ -59,22 +74,49 @@ public class EventoController {
             log.error("No se envio al S3");
             System.out.println(3);
         }
-        //   redirectAttributes.addFlashAttribute("message", "Se subio el file "+camposEventos.getOriginalFilename()+" satisfactoriamente");
-        //   redirectAttributes.addFlashAttribute("message", "Se subio el file "+portadaEvento.getOriginalFilename()+" satisfactoriamente");
+
+
         eventoService.findById(id).ifPresent(evento -> {
             evento.setPortadaEvento("https://jflores-eventus.s3.amazonaws.com/"+camposEventos.getOriginalFilename());
             evento.setCamposEventos("https://jflores-eventus.s3.amazonaws.com/"+portadaEvento.getOriginalFilename());
             eventoService.saveOrUpdate(evento);
         });
-        return  "redirect:/evento";
+        model.addAttribute("eventoId",id);
+        System.out.println(id+"id del evento");
+        //Para las entradas
+        clienteService.findById(UserDetailsService.cliente.getIdCliente()).ifPresent(cliente -> model.addAttribute("clientes", cliente));
+        model.addAttribute("entradas",new Entrada());
+        return  "entrada/entradaEvento";
 
     }
 
     @GetMapping()
     public String eventos(Model model) {
+
         eventoService.findAll().ifPresent(eventos -> model.addAttribute("eventos", eventos));
         clienteService.findById(UserDetailsService.cliente.getIdCliente()).ifPresent(cliente -> model.addAttribute("clientes", cliente));
         return "evento/index";
+    }
+
+
+    @GetMapping("/eventosCliente")
+    public String misEventos(Model model, Cliente cliente) {
+
+        System.out.println("1");
+        cliente.setIdCliente(UserDetailsService.cliente.getIdCliente());
+        final List<Evento> eventosCliente = eventoService.findByCliente(cliente);
+        model.addAttribute("eventosCliente", eventosCliente);
+       // eventosCliente.forEach(System.out::println);
+        clienteService.findById(UserDetailsService.cliente.getIdCliente()).ifPresent(x -> model.addAttribute("clientes", x));
+        return "evento/misEventos";
+    }
+
+    @GetMapping("/{id}")
+    public String eventoPorId(@PathVariable Integer id, Model model) {
+
+        clienteService.findById(UserDetailsService.cliente.getIdCliente()).ifPresent(cliente -> model.addAttribute("clientes", cliente));
+        eventoService.findById(id).ifPresent(eventos -> model.addAttribute("eventos", eventos));
+        return "evento/verEvento";
     }
 
 

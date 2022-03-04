@@ -22,7 +22,7 @@
   <section id="header">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-        <a class="navbar-brand" th:href="@{/home}" ><img src="image/eventusLogo.png" width="50%" alt="logo"></a>
+        <a class="navbar-brand" th:href="@{/home}" ><img src="/image/eventusLogo.png" width="50%" alt="logo"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -30,19 +30,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" th:href="@{/home}" >Inicio</a>
+              <a class="nav-link " aria-current="page" th:href="@{/home}" >Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" th:href="@{/cliente/{id} (id = ${clientes.getIdCliente()})}" >Perfil</a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link " th:href="@{/evento}">Eventos</a>
             </li>
           </ul>
           <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <a class="nav-link text-black" th:href="@{/logout}" >Salir</a>
           </form>
         </div>
       </div>
@@ -51,7 +50,7 @@
   <!-- Fin  del header -->
 
   <!--  Inicio del formulario-->
-    <section id="formulario" class="margint-100 marginb-100">
+    <section id="formulario" class="margint-100 marginb-100 pantalla-m">
 
       <div class="container">
 
@@ -135,7 +134,7 @@
           <a href=""><span>Contacto</span></a>
           <a href=""><span>Libro de reclamaciones</span></a>
           <a href=""><span>Preguntas frecuentes</span></a>
-          
+
         </div>
     </div>
   </div>

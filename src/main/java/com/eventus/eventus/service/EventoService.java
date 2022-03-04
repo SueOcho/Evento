@@ -1,5 +1,6 @@
 package com.eventus.eventus.service;
 
+import com.eventus.eventus.model.Cliente;
 import com.eventus.eventus.model.Evento;
 import com.eventus.eventus.repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,4 +42,14 @@ public class EventoService implements CrudService<Evento, Integer>{
             return true;
         })).orElse(false);
     }
+
+
+    public List<Evento> findByCliente(Cliente cliente) {
+        return eventoRepository.findEventosByCliente(cliente);
+    }
+
+
+
+
+
 }

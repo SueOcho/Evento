@@ -1,6 +1,8 @@
 package com.eventus.eventus.service;
 
+import com.eventus.eventus.model.Cliente;
 import com.eventus.eventus.model.Entrada;
+import com.eventus.eventus.model.Evento;
 import com.eventus.eventus.repository.EntradaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +42,9 @@ public class EntradaService implements CrudService<Entrada, Integer>{
             entradaRepository.delete(entrada);
             return true;
         })).orElse(false);
+    }
+
+    public Entrada findByEvento(Integer id) {
+        return entradaRepository.findByEventoId(id);
     }
 }
