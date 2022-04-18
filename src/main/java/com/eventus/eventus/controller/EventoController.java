@@ -66,21 +66,30 @@ public class EventoController {
 
         log.info("Nombre original :" +camposEventos.getOriginalFilename());
         log.info("Nombre original :" +portadaEvento.getOriginalFilename());
+try{
 
-        if(s3ManagerService.uploadFileToS3(camposEventos) || s3ManagerService.uploadFileToS3(portadaEvento)){
+     if(s3ManagerService.uploadFileToS3(camposEventos) && s3ManagerService.uploadFileToS3(portadaEvento)){
             log.info("Se envio al S3");
-            System.out.println(2);
+
+         eventoService.findById(id).ifPresent(evento -> {
+             evento.setPortadaEvento("https://jflores-eventus.s3.amazonaws.com/"+camposEventos.getOriginalFilename());
+             evento.setCamposEventos("https://jflores-eventus.s3.amazonaws.com/"+portadaEvento.getOriginalFilename());
+             eventoService.saveOrUpdate(evento);
+         });
         }else {
             log.error("No se envio al S3");
-            System.out.println(3);
         }
+}catch (Exception ex){
+    eventoService.findById(id).ifPresent(evento -> {
+        evento.setPortadaEvento("https://jflores-eventus.s3.amazonaws.com/fotoEventoPre.jpg");
+        evento.setCamposEventos("https://jflores-eventus.s3.amazonaws.com/fotoEventoPre.jpg");
+        eventoService.saveOrUpdate(evento);
+    });
+
+}
 
 
-        eventoService.findById(id).ifPresent(evento -> {
-            evento.setPortadaEvento("https://jflores-eventus.s3.amazonaws.com/"+camposEventos.getOriginalFilename());
-            evento.setCamposEventos("https://jflores-eventus.s3.amazonaws.com/"+portadaEvento.getOriginalFilename());
-            eventoService.saveOrUpdate(evento);
-        });
+
         model.addAttribute("eventoId",id);
         System.out.println(id+"id del evento");
         //Para las entradas

@@ -19,8 +19,6 @@ public class ClienteService implements CrudService<Cliente, Integer>{
     private final PasswordEncoder passwordEncoder;
 
 
-
-
     @Override
     public Optional<Cliente> findById(Integer idCliente) {
         return clienteRepository.findById(idCliente);
