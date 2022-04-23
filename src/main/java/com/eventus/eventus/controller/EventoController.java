@@ -6,7 +6,7 @@ import com.eventus.eventus.model.Evento;
 import com.eventus.eventus.service.ClienteService;
 import com.eventus.eventus.service.EventoService;
 import com.eventus.eventus.service.UserDetailsService;
-import com.eventus.eventus.service.aws.S3ManagerService;
+import com.eventus.eventus.service.util.CargarFotos;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -28,13 +27,13 @@ public class EventoController {
     @Autowired
     private ClienteService clienteService;
 
-    private final S3ManagerService s3ManagerService;
+    private final CargarFotos cargarFotos;
 
     @GetMapping("/crear")
     public String agregarEvento(Model model) {
         model.addAttribute("eventos", new Evento());
         clienteService.findById(UserDetailsService.cliente.getIdCliente()).ifPresent(cliente -> model.addAttribute("clientes", cliente));
-        //s3ManagerService.test();
+        //cargarFotos.test();
         return "evento/crearEvento";
     }
 
@@ -42,8 +41,6 @@ public class EventoController {
     public String agregarEventoSave( Evento evento,Model model) {
 
         evento.setCliente(UserDetailsService.cliente);
-        evento.setCamposEventos("https://jflores-eventus.s3.amazonaws.com/fotoEventoPre.jpg");
-        evento.setPortadaEvento("https://jflores-eventus.s3.amazonaws.com/fotoEventoPre.jpg");
         eventoService.saveOrUpdate(evento);
         clienteService.findById(UserDetailsService.cliente.getIdCliente()).ifPresent(cliente -> model.addAttribute("clientes", cliente));
         model.addAttribute("eventos",evento);
@@ -68,7 +65,7 @@ public class EventoController {
         log.info("Nombre original :" +portadaEvento.getOriginalFilename());
 try{
 
-     if(s3ManagerService.uploadFileToS3(camposEventos) && s3ManagerService.uploadFileToS3(portadaEvento)){
+     if(cargarFotos.uploadFileToS3(camposEventos) && cargarFotos.uploadFileToS3(portadaEvento)){
             log.info("Se envio al S3");
 
          eventoService.findById(id).ifPresent(evento -> {

@@ -1,29 +1,17 @@
-package com.eventus.eventus.service.aws;
+package com.eventus.eventus.service.util;
 
 
-import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.eventus.eventus.model.FileS3;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
-public class S3ManagerService {
+public class CargarFotos {
 
     private static final String TABLE_NAME = "User";
-
-    private final S3Manager s3Manager;
-
-    public S3ManagerService(S3Manager s3Manager) {
-        this.s3Manager = s3Manager;
-    }
 
     public boolean uploadFileToS3(MultipartFile file) {
 
