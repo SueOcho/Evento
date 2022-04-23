@@ -106,11 +106,11 @@
 
           <div th:object="${eventos} "class="col-5">
 
-            <img th:src="${eventos.portadaEvento}"  width="70%"  height="200px" alt="...">
+            <img th:src="${'/'+eventos.portadaEvento}"  width="70%"  height="200px" alt="...">
 
             <div class="  margint-50">
 
-              <img th:src="${eventos.getCamposEventos()}" width="70%"  height="200px" alt="...">
+              <img th:src="${'/'+eventos.getCamposEventos()}" width="70%"  height="200px" alt="...">
 
             </div>
 

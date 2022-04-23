@@ -76,7 +76,7 @@
 
         <div class="row justify-content-between">
           <div class="col-4">
-            <img th:src="${evento.portadaEvento}"  width="70%"  height="200px" alt="fotito">
+            <img th:src="${'/'+evento.portadaEvento}"  width="70%"  height="200px" alt="fotito">
           </div>
           <div class="col-4 pt-5">
            <h3><a class="fw-bolder text-black" th:text="${evento.nombreEvento}" th:href="@{/evento/{id} (id = ${evento.getIdEvento()})}"></a></h3>

@@ -34,7 +34,7 @@ public class EventoController {
     public String agregarEvento(Model model) {
         model.addAttribute("eventos", new Evento());
         clienteService.findById(UserDetailsService.cliente.getIdCliente()).ifPresent(cliente -> model.addAttribute("clientes", cliente));
-        s3ManagerService.test();
+        //s3ManagerService.test();
         return "evento/crearEvento";
     }
 
@@ -72,20 +72,16 @@ try{
             log.info("Se envio al S3");
 
          eventoService.findById(id).ifPresent(evento -> {
-             evento.setPortadaEvento("https://jflores-eventus.s3.amazonaws.com/"+camposEventos.getOriginalFilename());
-             evento.setCamposEventos("https://jflores-eventus.s3.amazonaws.com/"+portadaEvento.getOriginalFilename());
+             evento.setPortadaEvento("fotoEventos/"+camposEventos.getOriginalFilename());
+             evento.setCamposEventos("fotoEventos/"+portadaEvento.getOriginalFilename());
              eventoService.saveOrUpdate(evento);
          });
         }else {
-            log.error("No se envio al S3");
+            log.error("No se se cargo lasfoto");
         }
 }catch (Exception ex){
-    eventoService.findById(id).ifPresent(evento -> {
-        evento.setPortadaEvento("https://jflores-eventus.s3.amazonaws.com/fotoEventoPre.jpg");
-        evento.setCamposEventos("https://jflores-eventus.s3.amazonaws.com/fotoEventoPre.jpg");
-        eventoService.saveOrUpdate(evento);
-    });
 
+     ex.getMessage();
 }
 
 
